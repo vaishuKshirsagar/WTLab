@@ -1,0 +1,130 @@
+index.jsp :
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<%@taglib uri="/struts-tags" prefix="s" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<s:head />
+</head>
+<body>
+<s:form action="Login">
+<s:textfield name="userName" label="User Name" placeholder="Default
+'Vaibhavi'"/>
+<s:password name="password" label="Password" />
+<s:textfield name="phoneNumber" label="Phone Number" placeholder="10
+digit phone number"/>
+<s:textfield name="email" label="Email" type="email" />
+<s:submit value="Login" />
+</s:form>
+</body>
+</html>
+welcome.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<%@taglib uri="/struts-tags" prefix="s" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login Successful</title>
+</head>
+<body>
+<h3> Congratulations! You have logged in successfully.</h3>
+<h4> Welcome <s:property value="userName"/>!!! </h4>
+</body>
+web.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+id="WebApp_ID" version="4.0">
+<display-name>struts_validation</display-name>
+<welcome-file-list>
+<welcome-file>index.jsp</welcome-file>
+</welcome-file-list>
+<filter>
+<filter-name>struts2</filter-name>
+<filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+</filter>
+<filter-mapping>
+<filter-name>struts2</filter-name>
+<url-pattern>/*</url-pattern>
+</filter-mapping>
+</web-app>
+struts.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+<constant name="struts.custom.i18n.resources" value="LoginAction" />
+<package name="default" extends="struts-default" namespace="/">
+<action name="Login" class="Login" >
+<result name="success">welcome.jsp</result>
+<result name="input">index.jsp</result>
+</action>
+</package>
+</struts>
+Login.java
+import com.opensymphony.xwork2.ActionSupport;
+public class Login extends ActionSupport {
+private String userName;
+private String password;
+private String phoneNumber;
+private String email;
+public String execute() {
+return SUCCESS;
+}
+public String getUserName() {
+return userName;
+}
+public void setUserName(String userName) {
+this.userName = userName;
+}
+public String getPassword() {
+return password;
+}
+public void setPassword(String password) {
+this.password = password;
+}
+public String getPhoneNumber() {
+return phoneNumber;
+}
+public void setPhoneNumber(String phoneNumber) {
+this.phoneNumber = phoneNumber;
+}
+public String getEmail() {
+return email;
+}
+public void setEmail(String email) {
+this.email = email;
+}
+public void validate() {
+if (getUserName().length() == 0) {
+addFieldError("userName", "UserName is required");
+}
+else if (!getUserName().equals("Vaibhavi")) {
+addFieldError("userName", "Invalid User");
+}
+if (getPassword().length() == 0) {
+addFieldError("password", getText("Password is required"));
+}
+if (getPhoneNumber().length() == 0) {
+addFieldError("phoneNumber", getText("Phone Number is required"));
+}
+else if (!(getPhoneNumber().length() == 10)) {
+addFieldError("phoneNumber", "Enter 10 digit phone number");
+}
+else if (!(getPhoneNumber().charAt(0)=='7') &&
+!(getPhoneNumber().charAt(0)=='8') && !(getPhoneNumber().charAt(0)=='9') ) {
+addFieldError("phoneNumber", "Invalid phone number");
+}
+if (getEmail().length() == 0) {
+addFieldError("email", getText("Email is required"));
+}
+}
+}

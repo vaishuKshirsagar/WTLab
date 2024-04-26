@@ -1,0 +1,74 @@
+XML file:
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+<cd>
+<Srno>01</Srno>
+<Employee_ID>001</Employee_ID>
+<Employee_name>Vaishnavi Kshirsagar</Employee_name>
+<Mobile>9988776655</Mobile>
+<Address>Pune</Address>
+<Salary>90000</Salary>
+</cd>
+<cd>
+<Srno>02</Srno>
+<Employee_ID>002</Employee_ID>
+<Employee_name>Tejaswi Jadhav</Employee_name>
+<Mobile>8855667799</Mobile>
+<Address>Nashik</Address>
+<Salary>50000</Salary>
+</cd>
+<cd>
+<Srno>03</Srno>
+<Employee_ID>003</Employee_ID>
+<Employee_name>Ted Mosby</Employee_name>
+<Mobile>9975684521</Mobile>
+<Address>New jersey</Address>
+<Salary>65000</Salary>
+</cd>
+<cd>
+<Srno>04</Srno>
+<Employee_ID>004</Employee_ID>
+<Employee_name>Marshall Erikson</Employee_name>
+<Mobile>9875642141</Mobile>
+<Address>Minnesota</Address>
+<Salary>55000</Salary>
+</cd>
+<cd>
+<Srno>05</Srno>
+<Employee_ID>005</Employee_ID>
+<Employee_name>Barney Stinson</Employee_name>
+<Mobile>8987546521</Mobile>
+<Address>NewYork</Address>
+<Salary>40000</Salary>
+</cd> </catalog>
+XSLT file:
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template match="/">
+<html>
+<body>
+<h2>Catalog Collection</h2>
+<table border="1" cellpadding="10">
+<tr bgcolor="#f67e7d">
+<th>Sr.no</th>
+<th>Employee_ID</th>
+<th>Employee_Name</th>
+<th>Mobile</th>
+<th>Address</th>
+<th>Salary</th>
+</tr>
+<xsl:for-each select="catalog/cd">
+<tr>
+<td><xsl:value-of select = "Srno"/></td>
+<td><xsl:value-of select = "Employee_ID"/></td>
+<td><xsl:value-of select = "Employee_name"/></td>
+<td><xsl:value-of select = "Mobile"/></td>
+<td><xsl:value-of select = "Address"/></td>
+<td><xsl:value-of select = "Salary"/></td>
+</tr>
+</xsl:for-each>
+</table>
+</body>
+</html>
+</xsl:template>
+</xsl:stylesheet

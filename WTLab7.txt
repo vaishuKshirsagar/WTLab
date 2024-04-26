@@ -1,0 +1,122 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "students";
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+die("Connection failed: " . $conn->connect_error);
+}
+$roll_no = "";
+$name = "";
+$address = "";
+if (isset($_POST['submit'])) {
+$roll_no = $_POST['roll_no'];
+$name = $_POST['name'];
+$address = $_POST['address'];
+$sql = "INSERT INTO stud_info(roll_no, name, address) VALUES
+('$roll_no','$name','$address')";
+$result = $conn->query($sql);
+if ($result == TRUE) {
+echo "New record created successfully.";
+} else {
+echo "Error:" . $sql . "<br>" . $conn->error;
+}
+}
+if (isset($_POST['update'])) {
+$roll_no = $_POST['roll_no'];
+$name = $_POST['name'];
+$address = $_POST['address'];
+$sql = "UPDATE stud_info SET roll_no='$roll_no',name='$name',address='$address' WHERE
+roll_no='$roll_no' ";
+$result = $conn->query($sql);
+if ($result == TRUE) {
+echo "Record updated successfully.";
+} else {
+echo "Error:" . $sql . "<br>" . $conn->error;
+}
+}
+if (isset($_GET['roll'])) {
+$roll = $_GET['roll'];
+$sql = "SELECT * FROM stud_info where roll_no='$roll' ";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+$roll_no = $row['roll_no'];
+$name = $row['name'];
+$address = $row['address'];
+}
+if (isset($_GET['delete'])) {
+$roll = $_GET['delete'];
+$sql = "DELETE FROM stud_info WHERE roll_no='$roll'";
+$result = $conn->query($sql);
+if ($result == TRUE) {
+echo "Record deleted successfully.";
+} else {
+echo "Error:" . $sql . "<br>" . $conn->error;
+}
+}
+$sql = "SELECT * FROM stud_info";
+$result = $conn->query($sql);
+?>
+<html>
+<body>
+<h2>STUDENT INFORMATION</h2>
+<form method="post">
+<input type="text" name="roll_no" placeholder="Roll No" value="<?php
+echo $roll_no;
+?>" <?php
+if (isset($_GET['roll'])) {
+echo "readonly";
+}
+?> > <br><br>
+<input type="text" name="name" placeholder="Name" value="<?php
+echo $name;
+?>" > <br><br>
+<input type="text" name="address" placeholder="Address" value="<?php
+echo $address;
+?>" > <br>
+<br>
+<?php
+if (isset($_GET['roll'])) {
+echo '<input type="submit" name="update">';
+} else {
+echo '<input type="submit" name="submit">';
+}
+?>
+</form>
+<h2>Students Info</h2>
+<table>
+<tr>
+<th>Roll no</th>
+<th>Name</th>
+<th>Address</th>
+<th>Action </th>
+</tr>
+<?php
+if ($result->num_rows > 0) {
+while ($row = $result->fetch_assoc()) {
+?>
+<tr>
+<td><?php
+echo $row['roll_no'];
+?></td>
+<td><?php
+echo $row['name'];
+?></td>
+<td><?php
+echo $row['address'];
+?></td>
+<td><a href="?roll=<?php
+echo $row['roll_no'];
+?>">Update</a> <br>
+<a href="?delete=<?php
+echo $row['roll_no'];
+?>">Delete</a></td>
+</tr>
+<?php
+}
+}
+?>
+</table>
+</body>
+</html
