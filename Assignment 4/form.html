@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validation</title>
+</head>
+<body>
+<form>
+<div>
+<label>Name</label>
+<input type="text" name="name" id="name">
+</div>
+<br>
+<div>
+<label>Phone</label>
+<input type="text" name="phone" id="phone">
+</div>
+<br>
+<div>
+<label>Email</label>
+<input type="text" name="email" id="email">
+</div>
+<br>
+<input type="button" value="Submit" onclick="validate()">
+</form>
+<script>
+function validate(){
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let email=document.getElementById("email").value;
+let error="";
+if(name.length==0){
+error+="Name can't be empty!\n";
+}
+else if(name.length<6 || name.length>10){
+error+="Name should be between 6 to 15 characters!\n";
+}
+if(phone.length==0){
+error+="Phone can't be empty!\n";
+}
+else if(phone.length!=10){
+error+="Phone should be 10 digits long!\n";
+}
+else if(!phone.startsWith('7') && !phone.startsWith('8') &&
+!phone.startsWith('9') ){
+error+="Invalid Phone!\n";
+}
+if(email.length==0){
+error+="Email can't be empty!\n";
+}
+else if(!email.includes("@") || !email.includes(".")){
+error+="Invalid Email!\n";
+}
+if(error.length!=0){
+alert(error)
+}else{
+alert("Validated Successfully!")
+}
+}
+</script>
+</body>
+</html>
